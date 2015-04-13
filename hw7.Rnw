@@ -1,0 +1,93 @@
+\documentclass{article}
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\usepackage{sectsty}
+\sectionfont{\normalfont\fontfamily{phv}\fontsize{16}{19}\bfseries}
+\subsectionfont{\normalfont\fontfamily{phv}\fontsize{11}{13}\selectfont\underline}
+\usepackage{float}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{fancyvrb}
+\usepackage{framed}
+\usepackage{breqn}
+\renewcommand*\rmdefault{phv}
+\interfootnotelinepenalty=10000
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+%----------------------------------------------------------------------------------------
+%  TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\title{  
+\normalfont \normalsize 
+\textsc{} \\ [25pt] % Your university, school and/or department name(s)
+\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+\huge Stat 530 Homework 7\\ % The assignment title
+\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{Kyle N. Payne} % Your name
+
+\date{\normalsize\today} % Today's date or a custom date
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\begin{document}
+\maketitle
+
+\section{}
+\subsection{}
+<<getcode, echo=FALSE, cache=FALSE>>=
+source('librarian.R')
+source('data.R')
+
+read_chunk('main.R')
+@
+
+We begin this section by showing the output of the targets object, from the \texttt{readTargets} function in \texttt{edgeR} which indicates the number of experimental conditions and replicates. There are two factor variables with 
+two corresponding levels, sex (male, female) and mating (monogamous, polygamous). There are 3 replicates per condition.
+
+<<rT, echo=TRUE, eval=TRUE, results='asis'>>=
+library(xtable)
+xtable(targets)
+@
+\subsection{}
+<<rawcounts, echo=TRUE, eval=TRUE, results='asis'>>=
+xtable(head(raw_counts$sample))
+@
+\subsection{Filtering}
+<<pr_1_c, echo=TRUE, results='asis'>>=
+@
+The prescribed filteing resulted in \Sexpr{sum(counts$sample[,"lib.size"])} many genes 
+left in the \texttt{counts} DGEList.
+\subsection{Normalization}
+The following table gives the library size and normalization factors
+for male replicate 1 
+<<pr_1_d, echo=TRUE, results='asis'>>=
+xtable(counts$sample[7,c("lib.size", "norm.factors")])
+@
+\subsection{Design Matrix}
+<<pr_1_e, echo=TRUE, results='asis'>>=
+@
+<<xtable_2, echo=TRUE, results='asis'>>=
+xtable(head(design))
+@
+\subsection{Dispersions}
+Below are the tagwise dispersions for the first 5 genes
+<<pr_1_f, echo=TRUE, results='asis'>>=
+@
+\subsection{}
+The table below gives the top 5 genes in terms of small p-values
+<<pr_1_g, echo=TRUE, results='asis'>>=
+@
+<<xtable_3, echo=TRUE, results='asis'>>=
+xtable(tests[1:5,],digits=10)
+@
+
+AL
+\end{document}
